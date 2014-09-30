@@ -1,0 +1,15 @@
+<aside>
+  <h1><%= @project.title %></h1>
+  <p><%= @project.describe %></p>
+</aside>
+
+<div>
+Todo lists
+</div>
+
+<%= link_to 'Back', projects_path %>
+| <%= link_to 'Edit', edit_project_path(@project) %>
+
+<br/>
+<%= link_to 'Delete This Project', project_path(@project), 
+            method: :delete, data: { confirm: 'Are you sure?' } %> 

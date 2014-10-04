@@ -1,5 +1,4 @@
-<h4>New Todo</h4>
-<%= form_for([@project,@todo]) do |f| %>
+<%= form_for([@project, @project.todos.build]) do |f| %>
   <p>
     <%= f.label :goal %><br>
     <%= f.text_field :goal %>
@@ -12,6 +11,3 @@
     <%= f.submit %>
   </p>
 <% end %>
-~                   
-<%= link_to 'Back',  project_todo_path(@project,@todo) %>
-

@@ -1,11 +1,16 @@
 <aside>
-  <h1><%= @project.title %></h1>
-  <p><%= @project.describe %></p>
+  <h3>Title: <%= @project.title %></h3>
+  <p>Describe: <%= @project.describe %></p>
 </aside>
 
 <div>
-Todo lists
+  <h3>Todo lists</h3>
+  <%= render @project.todos %>
 </div>
+
+<section>
+<h4>Add a Todo:</h4>
+<%= render "todos/form" %>
 
 <%= link_to 'Back', projects_path %>
 | <%= link_to 'Edit', edit_project_path(@project) %>
@@ -13,3 +18,4 @@ Todo lists
 <br/>
 <%= link_to 'Delete This Project', project_path(@project), 
             method: :delete, data: { confirm: 'Are you sure?' } %> 
+</section>

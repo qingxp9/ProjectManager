@@ -1,2 +1,12 @@
-<h1>Todos#show</h1>
-<p>Find me in app/views/todos/show.html.erb</p>
+<h4>Goal: <%= @todo.goal %></h4>
+<p>People: <%= @todo.team_member_id %></p>
+
+<h4>Comments: </h4>
+<%= render @todo.comments %>
+
+<h4>Add a comment:</h4>
+<%= render "comments/form" %>
+
+ 
+<%= link_to 'Back', project_path(@project) %>
+| <%= link_to 'Edit', edit_project_todo_path(@project,@todo) %>

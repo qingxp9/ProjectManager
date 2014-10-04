@@ -1,29 +1,5 @@
 Rails.application.routes.draw do
-  
-  get 'todos/index'
-
-  get 'todos/create'
-
-  get 'todos/new'
-
-  get 'todos/edit'
-
-  get 'todos/show'
-
-  get 'todos/update'
-
-  get 'todos/destroy'
-
-  get 'create/new'
-
-  get 'create/edit'
-
-  get 'create/show'
-
-  get 'create/update'
-
-  get 'create/destroy'
-
+  root 'welcome#index'
   resources :projects do
     resources :todos do
       resources :comments
@@ -34,7 +10,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

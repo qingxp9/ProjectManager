@@ -1,13 +1,18 @@
-<h1>Project List</h1>
-<% @projects.each do |project| %>
-  <li>
-    <td> 
-    <h4><%= project.title    %></h4>
-    <p><%= project.describe %></p>
-    </td>
-    <td><%= link_to 'Show', project_path(project) %> </td>
-    <td><%= link_to 'Edit', edit_project_path(project) %> </td>
-  </li>
-<% end %>
-<br/>
+<h3>Project List</h3>
 <%= link_to 'New project', new_project_path %>
+</br>
+<section>
+<% @projects.each do |project| %>
+  <tr>
+    <h4><%= project.title %></h4>
+      <%= project.describe %>
+  </tr>
+  <tr> 
+      <%= link_to 'Show', project_path(project) %> 
+      <%= link_to 'Edit', edit_project_path(project) %>
+  </tr>
+<% end %>
+</section>
+
+<section>
+</section>

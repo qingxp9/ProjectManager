@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+before_action :authenticate_user!
+
   def create
     @project = Project.new(project_params)
     

@@ -1,18 +1,17 @@
 class ProjectsController < ApplicationController
-before_action :authenticate_user!
+  before_action :set_team
 
   def create
-    @project = Project.new(project_params)
+    @project = @projects.build(project_params) if user_signed_in?
     
     if @project.save
-      redirect_to @project
+      redirect_to @team
     else
       render 'new'
     end
   end
 
   def index
-    @projects = Project.all
   end
 
   def new
@@ -46,7 +45,12 @@ before_action :authenticate_user!
 
   private
     def project_params
-      params.require(:project).permit(:title, :describe)
+      params.require(:project).permit(:title, :describe, :team_id)
+    end
+
+    def set_team
+      @team = current_user.team
+      @projects = @team.projects
     end
 
 end

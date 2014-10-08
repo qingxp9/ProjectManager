@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @team.name %>
+</p>
+<hr/>
+<p>
+  <strong>Members:</strong>
+</p>
+  <% @team.users.all.each do |user| %>
+    <ul>
+      <td><%= user.email %></td>
+    </ul>
+  <% end %>
+
+<hr/>
+
+<p>
+  <strong>Projects:</strong>
+<%= link_to ' New', new_project_path %>
+  
+  <% @team.projects.all.each do |project| %>
+    <ul>
+      <td><%= project.title %></td>
+      <td><%= project.describe %></td>
+      <td>
+          <%= link_to 'Show', project_path(project) %>
+      </td>
+    </ul>
+  <% end %>
+  
+</p>
+
+<hr/>
+<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Back', teams_path %>

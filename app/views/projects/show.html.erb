@@ -1,21 +1,27 @@
-<aside>
-  <h3>Title: <%= @project.title %></h3>
-  <p>Describe: <%= @project.describe %></p>
-</aside>
+<div>
+  <h2><%= @project.title %></h2>
+  <p>描述： <%= @project.describe %></p>
+</div>
+
+<hr/>
 
 <div>
-  <h3>Todo lists</h3>
+  <h3>任务列表</h3>
   <%= render @project.todos %>
 </div>
 
-<section>
-<h4>Add a Todo:</h4>
+<hr/>
+
+<h4>添加任务:</h4>
 <%= render "todos/form" %>
 
-<%= link_to 'Back', projects_path %>
-| <%= link_to 'Edit', edit_project_path(@project) %>
+<hr/>
 
-<br/>
-<%= link_to 'Delete This Project', project_path(@project), 
-            method: :delete, data: { confirm: 'Are you sure?' } %> 
-</section>
+<p>
+  <%= link_to 'Back', team_path(@team) %>
+  | <%= link_to 'Edit', edit_project_path(@project) %>
+</p>
+<p>
+  <%= link_to 'Delete This Project', project_path(@project), 
+              method: :delete, data: { confirm: 'Are you sure?' } %> 
+</p>

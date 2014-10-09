@@ -1,10 +1,11 @@
-<p>
-  <strong>Commenter:</strong>
-  <%= comment.commenter %>
+<p>评论者:
+  <%= comment.user.email %>
+</p>
+<p>时间:
+  <%= comment.created_at %>
 </p>
  
 <p>
-  <strong>Comment:</strong>
   <%= comment.body %>
 </p>
  
@@ -13,3 +14,4 @@
                method: :delete,
                data: { confirm: 'Are you sure?' } %>
 </p>
+<br/>

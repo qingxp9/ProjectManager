@@ -22,10 +22,8 @@
   
   <% @team.projects.all.each do |project| %>
     <ul>
-      <td><%= project.title %></td>
-      <td><%= project.describe %></td>
       <td>
-          <%= link_to 'Show', project_path(project) %>
+          <%= link_to project.title, project_path(project) %>
       </td>
     </ul>
   <% end %>

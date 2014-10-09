@@ -1,12 +1,25 @@
-<h4>Goal: <%= @todo.goal %></h4>
-<p>People: <%= @todo.team_member_id %></p>
+<h2><%= @todo.goal %></h2>
+<p>负责人: <%= @todo.user.email %></p>
 
-<h4>Comments: </h4>
+<hr/>
+
+<h4>评论: </h4>
 <%= render @todo.comments %>
 
-<h4>Add a comment:</h4>
+<hr/>
+
+<h4>添加评论</h4>
 <%= render "comments/form" %>
 
- 
-<%= link_to 'Back', project_path(@project) %>
-| <%= link_to 'Edit', edit_project_todo_path(@project,@todo) %>
+<hr/>
+
+<p> 
+  <%= link_to 'Back', project_path(@project) %>
+  | <%= link_to 'Edit', edit_project_todo_path(@project,@todo) %>
+</p>
+<p>
+<%= link_to 'Destroy', project_todo_path(@project,@todo),
+                   method: :delete,
+                   data: { confirm: 'Are you sure?' } %>
+</p>
+

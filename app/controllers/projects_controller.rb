@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_team
+  before_action :set_projects
 
   def create
     @project = @projects.build(project_params) if user_signed_in?
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
 
-    redirect_to projects_path
+    redirect_to @team
   end
 
   private
@@ -48,7 +48,7 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:title, :describe, :team_id)
     end
 
-    def set_team
+    def set_projects
       @team = current_user.team
       @projects = @team.projects
     end

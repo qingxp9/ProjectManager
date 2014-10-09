@@ -1,8 +1,4 @@
 <p>
-  <td><%= todo.goal %></td>
-  <td><%= link_to 'Show', [todo.project,todo] %></td>
-  <td><%= link_to 'Destroy', [todo.project, todo],
-                   method: :delete,
-                   data: { confirm: 'Are you sure?' } %>
-  </td>
+  <%= link_to todo.goal, [todo.project,todo] %>
+  | <%= todo.user.email %>
 </p>

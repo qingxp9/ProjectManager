@@ -1,8 +1,9 @@
 class TodosController < ApplicationController
+  before_action :set_project
+
   def create
-    @project = Project.find(params[:project_id])
     @todo    = @project.todos.create(todo_params)
-    redirect_to project_todo_path(@project,@todo)
+    redirect_to project_path(@project)
   end
 
   def index
@@ -12,17 +13,14 @@ class TodosController < ApplicationController
   end
 
   def edit
-    @project = Project.find(params[:project_id])
     @todo    = @project.todos.find(params[:id])
   end
 
   def show
-    @project = Project.find(params[:project_id])
     @todo    = @project.todos.find(params[:id])
   end
 
   def update
-    @project = Project.find(params[:project_id])
     @todo = @project.todos.find(params[:id])
 
     if @todo.update(todo_params)
@@ -32,9 +30,7 @@ class TodosController < ApplicationController
     end
   end
 
-
   def destroy
-    @project = Project.find(params[:project_id])
     @todo    = @project.todos.find(params[:id])
     @todo.destroy
     redirect_to project_path(@project)
@@ -42,6 +38,11 @@ class TodosController < ApplicationController
 
   private
     def todo_params
-      params.require(:todo).permit(:goal, :team_member_id)
+      params.require(:todo).permit(:goal, :user_id)
     end
+
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+
 end

@@ -1,6 +1,14 @@
 <h2>任务:<%= @todo.goal %></h2>
 <p>负责人: <%= @todo.user.email %></p>
 <p>
+限制时间:<%= @todo.limit_time %>
+  <%= form_for @todo, url: {action: "change_limit_time"} do |f| %>
+    <%= datetime_select :todo, :limit_time %>
+    <%=  f.submit "更改"%>
+  <% end %>
+
+</p>
+<p>
   任务状态:
   <% if @todo.status %>
     完成

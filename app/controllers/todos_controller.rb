@@ -6,12 +6,6 @@ class TodosController < ApplicationController
     redirect_to project_path(@project)
   end
 
-  def index
-  end
-
-  def new
-  end
-
   def edit
     @todo    = @project.todos.find(params[:id])
   end
@@ -20,6 +14,12 @@ class TodosController < ApplicationController
     @todo    = @project.todos.find(params[:id])
     @todo.status = !@todo.status
     @todo.save
+    redirect_to project_todo_path(@project,@todo)
+  end
+
+  def change_limit_time
+    @todo    = @project.todos.find(params[:id])
+    @todo.update(limit_time_params)
     redirect_to project_todo_path(@project,@todo)
   end
 
@@ -46,6 +46,10 @@ class TodosController < ApplicationController
   private
     def todo_params
       params.require(:todo).permit(:goal, :user_id)
+    end
+
+    def limit_time_params
+      params.require(:todo).permit(:limit_time)
     end
 
     def set_project

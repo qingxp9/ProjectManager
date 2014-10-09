@@ -1,5 +1,16 @@
-<h2><%= @todo.goal %></h2>
+<h2>任务:<%= @todo.goal %></h2>
 <p>负责人: <%= @todo.user.email %></p>
+<p>
+  任务状态:
+  <% if @todo.status %>
+    完成
+  <% else %>
+    未完成
+  <%= form_tag({controller: "todos", action: "edit_status"}, method: "get") do %>
+    <%= submit_tag "Change" %>
+  <% end %>
+  <% end %>
+</p>
 
 <hr/>
 

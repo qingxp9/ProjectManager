@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009032016) do
+ActiveRecord::Schema.define(version: 20141009095829) do
 
   create_table "comments", force: true do |t|
     t.string   "user_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20141009032016) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "status",     default: false
   end
 
   add_index "todos", ["project_id"], name: "index_todos_on_project_id"

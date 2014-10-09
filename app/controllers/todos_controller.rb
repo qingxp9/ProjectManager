@@ -16,6 +16,13 @@ class TodosController < ApplicationController
     @todo    = @project.todos.find(params[:id])
   end
 
+  def edit_status
+    @todo    = @project.todos.find(params[:id])
+    @todo.status = !@todo.status
+    @todo.save
+    redirect_to project_todo_path(@project,@todo)
+  end
+
   def show
     @todo    = @project.todos.find(params[:id])
   end

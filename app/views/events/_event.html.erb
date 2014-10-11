@@ -1,0 +1,13 @@
+<% if event.user.team == current_user.team %>
+  <ol>
+    <p>项目: <%= event.todo.project.title %> </p>
+    <%= event.created_at %> <%= event.user.email %><%= event.action %>任务:
+    <% if event.todo %> 
+      <%= event.todo.goal %>
+      <p><%= event.content unless event.content == event.todo.goal%></p>
+    <% else %>
+      <%= event.content %>
+    <% end %>
+  </ol>
+  <hr/>
+<% end %>

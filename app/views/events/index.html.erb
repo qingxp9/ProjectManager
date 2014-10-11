@@ -1,17 +1,7 @@
 <h3>动态</h3>
-
-<% Event.all.each do |event|  %>
-  <% if event.user.team == current_user.team %>
-    <p>
-      <%= event.created_at %> <%= event.user.email %><%= event.action %>任务:
-      <% if event.todo %> 
-        <%= event.todo.goal %>
-        <p><%= event.content unless event.content == event.todo.goal%></p>
-      <% else %>
-        <%= event.content %>
-      <% end %>
-    </p>
-    <hr/>
-  <% end %>
-<% end %>
+<%= will_paginate @events %>
+<ol class="events">
+  <%= render @events %>
+</ol>
+<%= will_paginate @events %>
 

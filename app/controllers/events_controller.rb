@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   end
 
   def index
+    @events = Event.paginate(page: params[:page])
   end
 
   def destroy

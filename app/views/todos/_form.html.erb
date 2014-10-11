@@ -1,13 +1,9 @@
 <%= form_for([@project, @project.todos.build]) do |f| %>
   <p>
-    <%= f.label "目标" %><br>
+    <%= f.label "目标:" %><br>
     <%= f.text_field :goal %>
   </p>
   <p>
-    <%= f.label "指派用户ID" %><br>
-    <%= f.text_field :user_id %>
-  </p>
-  <p>
-    <%= f.submit %>
+    <%= f.submit "创建任务" %>
   </p>
 <% end %>

@@ -5,8 +5,8 @@
       <nav>
         <ul class="nav pull-right">
           <% if signed_in? %>
-            <li><%= link_to "My Team",team_path(current_user.team) %></li>
-            <li><%= link_to "Event", '#' %></li>
+            <li><%= link_to "团队",team_path(current_user.team) %></li>
+            <li><%= link_to "动态", events_path %></li>
             <li id="fat-menu" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Account <b class="caret"></b>

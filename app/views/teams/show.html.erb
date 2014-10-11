@@ -1,12 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @team.name %>
+<strong><%= @team.name %></strong>
 </p>
 <hr/>
 <p>
-  <strong>Members:</strong>
+  <strong>团队成员:</strong>
 </p>
   <% @team.users.all.each do |user| %>
     <ul>
@@ -17,8 +16,8 @@
 <hr/>
 
 <p>
-  <strong>Projects:</strong>
-<%= link_to ' New', new_project_path %>
+  <strong>团队项目:</strong>
+<%= link_to ' 新建', new_project_path %>
   
   <% @team.projects.all.each do |project| %>
     <ul>
@@ -31,5 +30,3 @@
 </p>
 
 <hr/>
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>

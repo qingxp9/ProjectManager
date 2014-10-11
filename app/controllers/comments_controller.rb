@@ -4,13 +4,14 @@ class CommentsController < ApplicationController
     @comment = @todo.comments.build(comment_params)
     @comment.user_id = current_user.id
     @comment.save
-    #@comment = current_user.comments.create(comment_params)
+
+    Event.create(user_id:current_user.id, action:"回复了", 
+                todo_id:@comment.todo_id, content:@comment.body)
+
     redirect_to project_todo_path(@project,@todo)
   end
 
   def destroy
-    @project = Project.find(params[:project_id])
-    @todo = @project.todos.find(params[:todo_id])
     @comment=@todo.comments.find(params[:id])
     @comment.destroy
     redirect_to project_todo_path(@project,@todo)

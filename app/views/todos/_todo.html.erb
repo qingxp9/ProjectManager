@@ -1,6 +1,6 @@
 <p>
   <%= link_to todo.goal, [todo.project,todo] %>
-  | <%= todo.user.email %>
+  | <%= todo.user.email if todo.user%>
   <% if todo.status %>
     完成
   <% else %>

@@ -3,6 +3,11 @@ class TodosController < ApplicationController
 
   def create
     @todo    = @project.todos.create(todo_params)
+    created_todo_name = @todo.goal
+
+    Event.create(user_id:current_user.id, action:"创建了", 
+                todo_id:@todo.id, content:created_todo_name)
+
     redirect_to project_path(@project)
   end
 
@@ -14,12 +19,23 @@ class TodosController < ApplicationController
     @todo    = @project.todos.find(params[:id])
     @todo.status = !@todo.status
     @todo.save
+
+    Event.create(user_id:current_user.id, action:"完成了", 
+                todo_id:@todo.id)
+
     redirect_to project_todo_path(@project,@todo)
   end
 
   def change_limit_time
     @todo    = @project.todos.find(params[:id])
+    old_limit_time = @todo.limit_time
     @todo.update(limit_time_params)
+    change_content = "将任务完成时间从 #{old_limit_time} 
+                  修改为 #{@todo.limit_time} "
+
+    Event.create(user_id:current_user.id, action:"修改了", 
+                todo_id:@todo.id, content:change_content)
+
     redirect_to project_todo_path(@project,@todo)
   end
 
@@ -29,8 +45,17 @@ class TodosController < ApplicationController
 
   def update
     @todo = @project.todos.find(params[:id])
+    old_todo_user_email = @todo.user ? @todo.user.email : "未指派" 
 
     if @todo.update(todo_params)
+
+      #change user
+      if @todo.user.email != old_todo_user_email
+        change_content = "将任务完成者由#{old_todo_user_email}修改为#{@todo.user.email}"
+        Event.create(user_id:current_user.id, action:"修改了", 
+                    todo_id:@todo.id, content:change_content)
+      end
+
       redirect_to project_todo_path(@project,@todo)
     else
       render 'edit'
@@ -38,8 +63,13 @@ class TodosController < ApplicationController
   end
 
   def destroy
-    @todo    = @project.todos.find(params[:id])
+    @todo = @project.todos.find(params[:id])
+    deleted_todo_name = @todo.goal
     @todo.destroy
+
+    Event.create(user_id:current_user.id, action:"删除了", 
+                content:deleted_todo_name)
+
     redirect_to project_path(@project)
   end
 

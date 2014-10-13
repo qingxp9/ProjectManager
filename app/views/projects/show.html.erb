@@ -1,6 +1,7 @@
 <div>
   <h2><%= @project.title %></h2>
   <p>描述： <%= @project.describe %></p>
+
 </div>
 
 <hr/>
@@ -12,16 +13,16 @@
 
 <hr/>
 
-<h4>添加任务:</h4>
-<%= render "todos/form" %>
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) %>
+  <h4>添加任务:</h4>
+  <%= render "todos/form" %>
 
 <hr/>
 
-<p>
-  <%= link_to 'Back', team_path(@team) %>
-  | <%= link_to 'Edit', edit_project_path(@project) %>
-</p>
-<p>
-  <%= link_to 'Delete This Project', project_path(@project), 
-              method: :delete, data: { confirm: 'Are you sure?' } %> 
-</p>
+<%= link_to 'Edit', edit_project_path(@project) %>
+  <% if Access.find_by(user_id:current_user.id, rank:4) %>
+    | <%= link_to 'Delete', project_path(@project), 
+                method: :delete, data: { confirm: 'Are you sure?' } %> 
+  <% end %>
+<% end %>
+

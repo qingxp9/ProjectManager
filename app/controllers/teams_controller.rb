@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
+  before_action :authenticate_user!, except: :index
   before_action :set_team, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: :show
   respond_to :html
 
   def index
@@ -9,7 +9,11 @@ class TeamsController < ApplicationController
   end
 
   def show
-    respond_with(@team)
+    if current_user.team == @team
+      respond_with @team
+    else
+      redirect_to current_user.team
+    end
   end
 
   def new
@@ -31,10 +35,10 @@ class TeamsController < ApplicationController
     respond_with(@team)
   end
 
-  def destroy
-    @team.destroy
-    respond_with(@team)
-  end
+  #def destroy
+  #  @team.destroy
+  #  respond_with(@team)
+  #end
 
   private
     def set_team

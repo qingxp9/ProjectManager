@@ -9,9 +9,12 @@
   <%= comment.body %>
 </p>
  
-<p>
-  <%= link_to 'Destroy', [comment.todo.project,comment.todo, comment],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-</p>
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or current_user == comment.user %>
+  <p>
+    <%= link_to '删除评论', [comment.todo.project,comment.todo, comment],
+                 method: :delete,
+                 data: { confirm: 'Are you sure?' } %>
+  </p>
+<% end %>
+
 <br/>

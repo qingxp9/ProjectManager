@@ -1,4 +1,5 @@
 <% if event.user.team == current_user.team %>
+  <% if Access.find_by(user_id:current_user.id, project_id:event.todo.project.id, rank:[2,3]) or Access.find_by(user_id:current_user.id, rank:4) %>
   <ol>
     <p>项目: <%= event.todo.project.title %> </p>
     <%= event.created_at %> <%= event.user.email %><%= event.action %>任务:
@@ -10,4 +11,5 @@
     <% end %>
   </ol>
   <hr/>
+  <% end %>
 <% end %>

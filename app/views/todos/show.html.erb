@@ -1,29 +1,40 @@
 <h2>任务:<%= @todo.goal %></h2>
-<p>负责人: <%= @todo.user ? @todo.user.email : "未指派" %></p>
-<%= form_for([@project,@todo]) do |f| %>
-  <%= f.text_field :user_id %>
-  <%= f.submit "更改指派"%>
+<p><%= link_to "返回项目: #{@project.title}", project_path(@project) %></p>
+<p>任务:<%= @todo.goal %>
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) %>
+  <%= link_to '删除任务', project_todo_path(@project,@todo),
+                     method: :delete,
+                     data: { confirm: 'Are you sure?' } %>
 <% end %>
-<p>
-限制时间:<%= @todo.limit_time %>
+  </p>
+<hr/>
+<p>负责人: <%= @todo.user ? @todo.user.email : "未指派" %></p>
+<p>限制时间:<%= @todo.limit_time ? @todo.limit_time : "未指定" %></p>
+<p>任务状态:<%= @todo.status ? "完成" : "未完成" %></p>
+
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or @todo.user == current_user %>
+  <hr/>
+  <h4>编辑：</h4>
+  <p>更改名称: <%= link_to '编辑', edit_project_todo_path(@project,@todo) %></p>
+  <%= form_for([@project,@todo]) do |f| %>
+    更改负责人(user_id):
+    <%= f.text_field :user_id %>
+    <%= f.submit "提交"%>
+  <% end %>
+
   <%= form_for @todo, url: {action: "change_limit_time"} do |f| %>
+    更改完成时间:
     <%= datetime_select :todo, :limit_time %>
     <%=  f.submit "更改"%>
   <% end %>
 
-</p>
-<p>
-  任务状态:
-  <% if @todo.status %>
-    完成
-  <% else %>
-    未完成
+  <% if !@todo.status %>
     <%= form_tag({controller: "todos", action: "edit_status"}, method: "get") do %>
-      <%= submit_tag "完成" %>
+      更改完成状态:
+      <%= submit_tag "完成任务" %>
     <% end %>
   <% end %>
-</p>
-
+<% end %>
 <hr/>
 
 <h4>评论: </h4>
@@ -36,13 +47,4 @@
 
 <hr/>
 
-<p> 
-  <%= link_to 'Back', project_path(@project) %>
-  | <%= link_to 'Edit', edit_project_todo_path(@project,@todo) %>
-</p>
-<p>
-<%= link_to 'Destroy', project_todo_path(@project,@todo),
-                   method: :delete,
-                   data: { confirm: 'Are you sure?' } %>
-</p>
 

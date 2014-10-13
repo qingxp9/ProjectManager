@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011070654) do
+ActiveRecord::Schema.define(version: 20141012070028) do
+
+  create_table "accesses", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "rank",       default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accesses", ["project_id", "user_id"], name: "index_accesses_on_project_id_and_user_id", unique: true
+  add_index "accesses", ["project_id"], name: "index_accesses_on_project_id"
+  add_index "accesses", ["user_id"], name: "index_accesses_on_user_id"
 
   create_table "comments", force: true do |t|
     t.string   "user_id"

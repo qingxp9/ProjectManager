@@ -1,5 +1,10 @@
 class TodosController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_project
+  before_action :need_basic_rank, only: :show
+  before_action :need_pjadmin_rank, only: [:create, :destroy]
+  before_action :edit_right, only: [:edit, :edit_status, :update, :change_limit_time]
+
 
   def create
     @todo    = @project.todos.create(todo_params)
@@ -50,10 +55,12 @@ class TodosController < ApplicationController
     if @todo.update(todo_params)
 
       #change user
-      if @todo.user.email != old_todo_user_email
-        change_content = "将任务完成者由#{old_todo_user_email}修改为#{@todo.user.email}"
-        Event.create(user_id:current_user.id, action:"修改了", 
-                    todo_id:@todo.id, content:change_content)
+      if @todo.user
+        if @todo.user.email != old_todo_user_email
+          change_content = "将任务完成者由#{old_todo_user_email}修改为#{@todo.user.email}"
+          Event.create(user_id:current_user.id, action:"修改了", 
+                      todo_id:@todo.id, content:change_content)
+        end
       end
 
       redirect_to project_todo_path(@project,@todo)
@@ -84,6 +91,20 @@ class TodosController < ApplicationController
 
     def set_project
       @project = Project.find(params[:project_id])
+      @team = @project.team
+    end
+
+    def edit_right
+      @todo = @project.todos.find(params[:id])
+      redirect_to @team unless Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or @todo.user == current_user
+    end
+
+    def need_basic_rank
+      redirect_to @team unless Access.find_by(user_id:current_user.id, project_id:@project.id, rank:[2,3]) or Access.find_by(user_id:current_user.id, rank:4)
+    end
+
+    def need_pjadmin_rank
+      redirect_to @team unless Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4)
     end
 
 end

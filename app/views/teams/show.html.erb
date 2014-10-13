@@ -1,32 +1,44 @@
-<p id="notice"><%= notice %></p>
-
 <p>
 <strong><%= @team.name %></strong>
 </p>
+<% if Access.find_by(user_id:current_user.id, rank:4) %>
+  <%= link_to 'Edit', edit_team_path(@team) %> 
+<% end %>
 <hr/>
 <p>
   <strong>团队成员:</strong>
 </p>
   <% @team.users.all.each do |user| %>
     <ul>
-      <td><%= user.email %></td>
+      <td><%= user.email %> User_id:<%= user.id %></td>
     </ul>
   <% end %>
 
 <hr/>
 
-<p>
-  <strong>团队项目:</strong>
-<%= link_to ' 新建', new_project_path %>
-  
-  <% @team.projects.all.each do |project| %>
-    <ul>
-      <td>
-          <%= link_to project.title, project_path(project) %>
-      </td>
-    </ul>
-  <% end %>
-  
-</p>
+<% if current_user.accesses.any? %>
+  <p>
+    <strong>团队项目:</strong>
+    
+    <% if Access.find_by(user_id:current_user.id, rank:4) %>
+      <%= link_to '新建', new_project_path %>
+      | <%= link_to '权限', new_access_path %>
+    <% end %>
+
+    <% @team.projects.all.each do |project| %>
+      <% if Access.find_by(user_id:current_user.id, project_id:project.id, rank: [2,3]) or Access.find_by(user:current_user.id, rank:4) %>
+        <ul>
+          <td>
+            名称:<%= link_to project.title, project_path(project) %>
+            Project_id:<%= project.id %>
+          </td>
+        </ul>
+      <% end %>
+    <% end %>
+  </p>
+<% end %>
+
 
 <hr/>
+
+<%= link_to 'There see all teams', teams_path %>

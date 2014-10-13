@@ -1,0 +1,17 @@
+<%= form_for @access do |f| %>
+  <p>
+    <%= f.label "User(id):" %>
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label "project(id):" %>
+    <%= f.text_field :project_id %>
+  </p>
+  <p>
+    <%= f.label "Rank:(普通成员2,项目管理员3)" %>
+    <%= f.text_field :rank %>
+  </p>
+
+  <%= f.submit %> 
+
+<% end %>

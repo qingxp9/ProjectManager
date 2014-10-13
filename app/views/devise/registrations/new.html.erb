@@ -12,10 +12,14 @@
   <div><%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-  <div><%= f.label :team_id %><br />
+  <div><%= f.label "Team(id)" %><br />
     <%= f.number_field :team_id %></div>
 
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+团队列表:
+<% Team.all.each do |team| %>
+  <ol><%= team.name %> | Team_id: <%= team.id %></ol>
+<% end %>
+<hr/>

@@ -12,7 +12,7 @@
 <p>限制时间:<%= @todo.limit_time ? @todo.limit_time : "未指定" %></p>
 <p>任务状态:<%= @todo.status ? "完成" : "未完成" %></p>
 
-<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or @todo.user == current_user %>
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) %>
   <hr/>
   <h4>编辑：</h4>
   <p>更改名称: <%= link_to '编辑', edit_project_todo_path(@project,@todo) %></p>
@@ -27,7 +27,9 @@
     <%= datetime_select :todo, :limit_time %>
     <%=  f.submit "更改"%>
   <% end %>
+<% end %>
 
+<% if Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or @todo.user == current_user %>
   <% if !@todo.status %>
     <%= form_tag({controller: "todos", action: "edit_status"}, method: "get") do %>
       更改完成状态:

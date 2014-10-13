@@ -3,7 +3,8 @@ class TodosController < ApplicationController
   before_action :set_project
   before_action :need_basic_rank, only: :show
   before_action :need_pjadmin_rank, only: [:create, :destroy]
-  before_action :edit_right, only: [:edit, :edit_status, :update, :change_limit_time]
+  before_action :edit_right, only: [:edit, :update, :change_limit_time]
+  before_action :edit_status, only: :edit_status
 
 
   def create
@@ -95,6 +96,11 @@ class TodosController < ApplicationController
     end
 
     def edit_right
+      @todo = @project.todos.find(params[:id])
+      redirect_to @team unless Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4)
+    end
+
+    def edit_status_right
       @todo = @project.todos.find(params[:id])
       redirect_to @team unless Access.find_by(user_id:current_user.id, project_id:@project.id, rank:3) or Access.find_by(user_id:current_user.id, rank:4) or @todo.user == current_user
     end

@@ -38,6 +38,6 @@ class AccessesController < ApplicationController
     end
 
     def access_params
-      params[:access]
+      params.require(:access).permit(:user_id, :project_id, :rank)
     end
 end

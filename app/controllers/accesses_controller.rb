@@ -1,11 +1,6 @@
 class AccessesController < ApplicationController
   before_action :set_access, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @accesses = Access.all
-    respond_with(@accesses)
-  end
-
+  before_action :need_teamowner_rank
   def create
     @access = Access.new(access_params)
     if @access.save
@@ -39,5 +34,9 @@ class AccessesController < ApplicationController
 
     def access_params
       params.require(:access).permit(:user_id, :project_id, :rank)
+    end
+
+    def need_teamowner_rank
+      redirect_to @team unless Access.find_by(user_id:current_user.id, rank:4)
     end
 end

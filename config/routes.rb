@@ -11,6 +11,6 @@ Rails.application.routes.draw do
     end
   end
   resources :events
-  resources :accesses
+  resources :accesses, only: [:create, :new, :update, :destroy, :edit]
 
 end
